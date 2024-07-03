@@ -4,6 +4,7 @@ from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.utils.text import slugify
 
 class Post(models.Model):
     user=models.ForeignKey(User,related_name='post_user',on_delete=models.CASCADE)
@@ -18,6 +19,10 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self,*args,**kwargs):
+        self.slug=slugify(self.title)
+        super(Post,self).save(*args,**kwargs)
 
 class Category(models.Model):
     name=models.CharField(max_length=120)
