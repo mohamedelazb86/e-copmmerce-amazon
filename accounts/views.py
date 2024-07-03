@@ -22,7 +22,7 @@ def signup(request):
             "Activate Code",
             f"welcome mr {username}\n pls use this code {profile.code}",
             "r_mido99@yahoo.com",
-            [{email}],
+            [email],
             fail_silently=False,
                 )
             return redirect(f'/accounts/{username}/activate')
