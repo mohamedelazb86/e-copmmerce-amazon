@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 
 from .models import Post,Review
-from .forms import PostForm
+from .forms import PostForm,ReviewForm
 
 # create crud opertion by functions
 
@@ -26,9 +26,23 @@ def post_list(request):
 
 def post_detatil(request,slug):
     post=Post.objects.get(slug=slug)
+    reviews=Review.objects.filter(post=post)
+
+    if request.method=='POST':
+        form=ReviewForm(request.POST)
+        if form.is_valid():
+            myform=form.save(commit=False)
+            myform.post=post
+
+            myform.save()
+            return redirect(f'/posts/{post.slug}')
+    else:
+        form=ReviewForm()
 
     context={
-        'post':post
+        'post':post,
+        'reviews':reviews,
+        'form':form,
     }
     return render(request,'posts/post_detail.html',context)
 
@@ -38,7 +52,7 @@ def create_post(request,slug):
         if form.is_valid():
             myform=form.save(commit=False)
             myform.user=request.user
-            form.save()
+            myform.save()
             return redirect('/posts/')
     else:
         form=PostForm()

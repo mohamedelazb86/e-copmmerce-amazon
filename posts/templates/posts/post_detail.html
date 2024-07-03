@@ -16,6 +16,22 @@
     <h3>{{post}}</h3>
     <h3>{{post.publish_date}}</h3>
     <img src="{{post.image.url}}" alt="">
+
+    <ul>
+        <li><h4>All Comments ({{reviews|length}}) </h4></li>
+
+        {% for review in reviews %}
+        <h4>{{review.user}} ======  {{review.content}} ==========  {{review.rate}}</h4>
+        {% empty %}
+        <h4>sorry there are no review here </h4>
+
+        {% endfor %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="add review">
+        </form>
+    </ul>
     
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
