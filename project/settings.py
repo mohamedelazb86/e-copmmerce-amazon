@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "taggit",
     'django_summernote',
-    
+
 
     # my apps
     'posts',
+    'products',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

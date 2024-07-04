@@ -1,3 +1,4 @@
+{% load django_bootstrap5 %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -28,8 +29,10 @@
         {% endfor %}
         <form action="" method="post">
             {% csrf_token %}
-            {{form}}
-            <input type="submit" value="add review">
+            {% bootstrap_form form %}
+
+    {% bootstrap_button button_type="submit" content="Add Review" %}
+    {% bootstrap_button button_type="reset" content="Cancel" %}
         </form>
     </ul>
     
