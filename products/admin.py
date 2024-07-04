@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django_summernote.admin import SummernoteModelAdmin
 
-from .models import Product,ProductImge,Brand
+from .models import Product,ProductImge,Brand,Review
 
 
 class ProductImgesadmin(admin.TabularInline):
@@ -18,3 +18,4 @@ class ProductAdmin(SummernoteModelAdmin):
 admin.site.register(Product,ProductAdmin)
 #admin.site.register(ProductImge)
 admin.site.register(Brand)
+admin.site.register(Review)

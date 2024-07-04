@@ -4,6 +4,8 @@ from taggit.managers import TaggableManager
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 FLAG_TYPE=[
@@ -32,6 +34,27 @@ class  Product(models.Model):
         super(Product,self).save(*args,**kwargs)
 
 
+    @property
+    def review_count(self):
+        reviews=self.review_product.all().count()
+        return reviews
+    
+    @property
+    def avg_rate(self):
+        total=0
+        reviews=self.review_product.all()
+        if len(reviews)>0:
+            for item in reviews:
+                total +=item.rate
+            avg=total/len(reviews)
+            
+        else:
+            avg=0
+        return avg
+
+
+
+
 class Brand(models.Model):
     name=models.CharField(max_length=120,verbose_name=_('name'))
     image=models.ImageField(upload_to='photo_brand')
@@ -50,3 +73,12 @@ class ProductImge(models.Model):
 
     def __str__(self):
         return str(self.product)
+class Review(models.Model):
+    user=models.ForeignKey(User,related_name='review_user',on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,related_name='review_product',on_delete=models.CASCADE)
+    content=models.TextField(max_length=1500)
+    rate=models.IntegerField(choices=[(i,i) for i in range(1,6)])
+    publish_date=models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.user} ===== {self.product}'
