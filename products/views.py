@@ -34,6 +34,12 @@ class Brand_Detail(DetailView):
     model=Brand
     template_name='products/brand_detail.html'
 
+    def get_context_data(self, **kwargs) :
+        context = super().get_context_data(**kwargs)
+        context["related"] =Product.objects.filter(brand=self.get_object())
+        return context
+    
+
 
 def add_review(request,slug):
     user=request.user
