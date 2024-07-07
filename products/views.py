@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Product,Brand,Review,ProductImge
 from django.views.generic import ListView,DetailView
+from django.db.models.aggregates import Count
 
 class Product_List(ListView):
     model=Product
@@ -25,6 +26,8 @@ class Product_detail(DetailView):
 class Brand_List(ListView):
     model=Brand
     template_name='products/brand_list.html'
+    paginate_by=30
+    queryset=Brand.objects.all().annotate(product_count=Count('product_brand'))
     
 
 class Brand_Detail(DetailView):
