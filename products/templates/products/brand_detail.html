@@ -150,17 +150,17 @@
                             <ul class="pagination">
                             {% if page_obj.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link" href="?page={{page_obj.previous.page_number}}">
+                                    <a class="page-link" href="?page={{page_obj.previous_page_number}}">
                                         <i class="fas fa-long-arrow-alt-left"></i>
                                     </a>
                                 </li>
                             {% endif %}
 
                         {% for i in paginator.page_range %}
-                            {% if page_obj.number == i %}
-                                <li class="page-item"><a class="page-link active" href="?page={{page_obj.number}}">{{i}}</a></li>
+                            {% if i == page_obj.number %}
+                                <li class="page-item"><a class="page-link active" href="#">{{i}}</a></li>
                             {% elif i >= page_obj.number|add:'-2' and i <= page_obj.number|add:'2' %}
-                                <li class="page-item"><a class="page-link" href="#">{{i}}</a></li>
+                                <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
 
                             {% endif %}
                         {% endfor %}
